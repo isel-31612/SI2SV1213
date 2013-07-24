@@ -30,7 +30,7 @@ namespace AccessModel
         {
             if (!repo.Tables.Contains(r.tableName))
             {
-                r.cmd = "SELECT TOP 1 * FROM " + r.tableName;
+                r.cmd = "SELECT TOP 1 * FROM " + r.tableName; //This will bring the 1st row from the table. Usefull for avoiding to create the table staticly
                 query(r);
             }
             r.perform(repo);
@@ -63,9 +63,10 @@ namespace AccessModel
         public void Close()
         {
             repo.AcceptChanges();
-            SqlDataAdapter adapter = new SqlDataAdapter(null,con);
+            SqlDataAdapter adapter = new SqlDataAdapter(null, con);
             foreach (DataTable dt in repo.Tables)
                 adapter.Update(dt);
+            //TODO DataBase is not updated with these changes, must look into it
         }
     }
 
